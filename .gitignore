@@ -1,0 +1,8 @@
+build/
+dist/
+lib/refs/
+src/obj/
+src/bin/
+tests/obj/
+tests/bin/
+*.user
