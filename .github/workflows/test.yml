@@ -1,0 +1,48 @@
+name: Tests
+
+# Unit tests for the parts without game or Unity dependency. Plugin builds and
+# releases happen locally (scripts/). Until the test project exists, the job
+# only checks out the repo.
+# GitHub-hosted runner on purpose: a public repo must not run fork PRs on a
+# self-hosted machine.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '8.0.x'
+      - name: dotnet test
+        run: |
+          shopt -s nullglob
+          projects=(tests/*.csproj)
+          if [ ${#projects[@]} -eq 0 ]; then echo "Noch kein Testprojekt."; exit 0; fi
+          dotnet test "${projects[0]}"
+
+  # Meldet das Ergebnis an pipepush. PRs aus Forks bekommen keine Secrets,
+  # dort wird der Schritt einfach übersprungen.
+  notify:
+    name: Notify pipepush
+    if: always()
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify pipepush
+        env:
+          PIPEPUSH_TOKEN: ${{ secrets.PIPEPUSH_TOKEN }}
+          PIPEPUSH_SERVER: ${{ vars.PIPEPUSH_SERVER || 'https://pipepush.geraldhofbauer.net' }}
+          STATUS: ${{ (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) && 'failure' || 'success' }}
+        run: |
+          if [ -z "$PIPEPUSH_TOKEN" ]; then echo "PIPEPUSH_TOKEN fehlt, keine Benachrichtigung."; exit 0; fi
+          curl -sf -X POST "$PIPEPUSH_SERVER/api/webhook" \
+            -H "Content-Type: application/json" \
+            -d "{\"token\":\"$PIPEPUSH_TOKEN\",\"status\":\"$STATUS\",\"pipeline\":\"$GITHUB_WORKFLOW\",\"branch\":\"$GITHUB_REF_NAME\",\"commit\":\"$GITHUB_SHA\",\"runId\":\"$GITHUB_RUN_NUMBER\"}"
