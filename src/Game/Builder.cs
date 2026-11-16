@@ -77,7 +77,7 @@ namespace NORevokerECR.Game
 
                 Step("flares", () => Flares(prefab));
                 Step("radar", () => RadarLikeIfrit(prefab));
-                Step("optical sensors", () => OpticsLikeDarkreach(prefab, aircraft));
+                Step("optical sensor", () => OpticsLikeDarkreach(prefab, aircraft));
                 Step("capacitor", () => Capacitor(prefab));
                 Step("laser designator", () => Laser(prefab));
                 Step("empty weight", () => Mass(prefab));
@@ -133,46 +133,42 @@ namespace NORevokerECR.Game
             Plugin.Log.LogInfo($"EA-12 radar: maxRange {donor.RadarParameters.maxRange} m, clutter {donor.RadarParameters.clutterFactor}");
         }
 
-        // Two plain TargetDetectors (Radar is the only subclass) with the
-        // Darkreach's values. Missing ones are added next to the FS-12's own,
-        // so they sit on the same part and see from the same place.
+        // The optical sensor is a plain TargetDetector (Radar is the only
+        // subclass). The FS-12 has one (10 km, magnification 0.7); it gets the
+        // Darkreach's values (12 km, magnification 2). "x2" in Seb's list is
+        // that magnification, not a second sensor.
         private static void OpticsLikeDarkreach(GameObject prefab, Aircraft aircraft)
         {
-            TargetDetector[] donors = Optical(Prefab(EcrSpec.OpticsDonorKey));
-            if (donors.Length == 0) throw new InvalidOperationException("the Darkreach has no optical sensor");
-            List<TargetDetector> ours = Optical(prefab).ToList();
-
-            if (ours.Count == 0)
+            TargetDetector donor = Optical(Prefab(EcrSpec.OpticsDonorKey)).FirstOrDefault()
+                ?? throw new InvalidOperationException("the Darkreach has no optical sensor");
+            TargetDetector ours = Optical(prefab).FirstOrDefault();
+            if (ours == null)
             {
+                // Not the case in 0.34.6; kept so a game update cannot leave the EA-12 blind.
                 UnitPart host = RootPart(prefab);
-                TargetDetector added = host.gameObject.AddComponent<TargetDetector>();
-                Reflect.CopySerialized(donors[0], added);
-                Reflect.Set(added, "attachedUnit", aircraft);
-                Reflect.Set(added, "part", host);
-                Reflect.Set(added, "scanner", host.transform);
-                Reflect.Set(added, "rotators", Array.CreateInstance(AccessTools.Inner(typeof(TargetDetector), "Rotator"), 0));
-                ours.Add(added);
+                ours = host.gameObject.AddComponent<TargetDetector>();
+                Reflect.CopySerialized(donor, ours);
+                Reflect.Set(ours, "attachedUnit", aircraft);
+                Reflect.Set(ours, "part", host);
+                Reflect.Set(ours, "scanner", host.transform);
+                Reflect.Set(ours, "rotators", Array.CreateInstance(AccessTools.Inner(typeof(TargetDetector), "Rotator"), 0));
             }
-            while (ours.Count < EcrSpec.OpticalSensors)
-            {
-                TargetDetector extra = ours[0].gameObject.AddComponent<TargetDetector>();
-                Reflect.CopySerialized(ours[0], extra);
-                ours.Add(extra);
-            }
-            if (ours.Count > EcrSpec.OpticalSensors)
-                Plugin.Log.LogWarning($"EA-12 optical sensors: the FS-12 already has {ours.Count}, only the first {EcrSpec.OpticalSensors} get the Darkreach's values");
-
-            for (int i = 0; i < EcrSpec.OpticalSensors; i++)
-                Reflect.Copy(donors[Math.Min(i, donors.Length - 1)], ours[i], OpticFields);
-            Plugin.Log.LogInfo($"EA-12 optical sensors: {EcrSpec.OpticalSensors} like the Darkreach's ({donors.Length} there), " +
-                Reflect.Describe(ours[0], "visualRange"));
+            Reflect.Copy(donor, ours, OpticFields);
+            Plugin.Log.LogInfo("EA-12 optical sensor like the Darkreach's: " + Reflect.Describe(ours, "visualRange", "magnification"));
         }
 
+        // The HUD value without pods is maxCharge plus what built-in
+        // self-protection jammers add in their Awake (RadarJammer.capacitance,
+        // 100 on the FS-12). Pods are separate prefabs and not counted here;
+        // JammerPods adds their share when they are attached.
         private static void Capacitor(GameObject prefab)
         {
             PowerSupply supply = prefab.GetComponentInChildren<PowerSupply>(true)
                 ?? throw new InvalidOperationException("the FS-12 has no capacitor (PowerSupply)");
-            Reflect.Set(supply, "maxCharge", EcrSpec.CapacitorKJ);
+            float builtIn = prefab.GetComponentsInChildren<RadarJammer>(true).Sum(j => Reflect.Get<float>(j, "capacitance"));
+            Reflect.Set(supply, "maxCharge", EcrSpec.CapacitorKJ - builtIn);
+            Plugin.Log.LogInfo($"EA-12 capacitor: {EcrSpec.CapacitorKJ - builtIn} kJ + {builtIn} kJ built-in jammer = {EcrSpec.CapacitorKJ} kJ, " +
+                $"+{EcrSpec.PodCapacitorKJ} kJ per jamming pod");
         }
 
         private static void Laser(GameObject prefab)

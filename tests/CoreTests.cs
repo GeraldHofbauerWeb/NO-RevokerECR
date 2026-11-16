@@ -108,11 +108,56 @@ namespace NORevokerECR.Tests
         }
 
         [Fact]
+        public void CapacitorIs600WithoutAnd800WithTwoPods()
+        {
+            Assert.Equal(600f, EcrSpec.CapacitorKJ);
+            Assert.Equal(800f, EcrSpec.CapacitorKJ + 2 * EcrSpec.PodCapacitorKJ);
+        }
+
+        [Fact]
+        public void DescriptionIsSebsText()
+        {
+            Assert.StartsWith("Electronic combat and reconnaissance variant of the FS-12 Revoker.", EcrSpec.Description);
+            Assert.Contains("at the cost of increased weight", EcrSpec.Description);
+        }
+
+        [Fact]
         public void KeysDifferFromTheOriginal()
         {
             Assert.NotEqual(EcrSpec.OriginalKey, EcrSpec.JsonKey);
             Assert.Equal("EA-12", EcrSpec.ShortName);
             Assert.StartsWith(EcrSpec.ShortName + " ", EcrSpec.FullName);
+        }
+    }
+}
+
+namespace NORevokerECR.Tests
+{
+    public class VersionTagTests
+    {
+        [Fact]
+        public void AppendsTheModVersion()
+        {
+            Assert.Equal("0.34.6_NO-RevokerECR-v0.2.0", VersionTag.Append("0.34.6", "0.2.0"));
+        }
+
+        [Fact]
+        public void DoesNotAppendTwice()
+        {
+            string once = VersionTag.Append("0.34.6", "0.2.0");
+            Assert.Equal(once, VersionTag.Append(once, "0.2.0"));
+        }
+
+        [Fact]
+        public void KeepsWhatOtherModsAddedBefore()
+        {
+            Assert.Equal("0.34.6_other-v1_NO-RevokerECR-v0.2.0", VersionTag.Append("0.34.6_other-v1", "0.2.0"));
+        }
+
+        [Fact]
+        public void NullGameVersionStillTagged()
+        {
+            Assert.Equal("_NO-RevokerECR-v0.2.0", VersionTag.Append(null, "0.2.0"));
         }
     }
 }

@@ -23,9 +23,13 @@ Fügt das EA-12 Revoker ECR hinzu, ein eigenes Flugzeug auf Basis des FS-12
 Revoker. Es steht in jedem Hangar, der das FS-12 anbietet, und lässt sich
 für 105m kaufen (Rang 4). Das normale FS-12 bleibt unverändert.
 
-ACHTUNG Testversion: nur Einzelspieler / offline verwenden. Die Prüfung,
-ob alle Spieler einer Sitzung dieselbe Version haben, fehlt noch. Im
-Multiplayer kann das Spiel sonst durcheinander geraten.
+Multiplayer: Alle Spieler einer Sitzung brauchen denselben Mod-Stand
+(dieselbe Version von NO-RevokerECR und dieselben anderen Flugzeug- und
+Waffen-Mods). Der Mod hängt dafür seine Kennung an die Spielversion. Die
+Lobby-Liste zeigt dir deshalb nur Lobbys mit genau denselben Mods, und
+der Beitritt in eine andere endet mit "Incorrect version". Für öffentliche
+Lobbys ohne den Mod: NO-RevokerECR in NOMM ausschalten.
+Dedicated Server werden noch nicht unterstützt.
 
 Installation mit NOMM:
   1. Zip entpacken.

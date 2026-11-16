@@ -35,7 +35,8 @@ namespace NORevokerECR.Game
                     $", part={Reflect.Describe(d, "part")}{extra}");
             }
             foreach (Countermeasure c in root.GetComponentsInChildren<Countermeasure>(true))
-                Plugin.Log.LogInfo($"[dump]   {c.GetType().Name} @ {PathOf(root, c.transform)}: \"{c.displayName}\" ammo={c.ammo}");
+                Plugin.Log.LogInfo($"[dump]   {c.GetType().Name} @ {PathOf(root, c.transform)}: \"{c.displayName}\" ammo={c.ammo}" +
+                    (c is RadarJammer ? ", " + Reflect.Describe(c, "capacitance") : ""));
             foreach (PowerSupply s in root.GetComponentsInChildren<PowerSupply>(true))
                 Plugin.Log.LogInfo($"[dump]   PowerSupply @ {PathOf(root, s.transform)}: {Reflect.Describe(s, "maxCharge", "maxPower", "chargePerRPM", "powerSources")}");
             foreach (LaserDesignator l in root.GetComponentsInChildren<LaserDesignator>(true))

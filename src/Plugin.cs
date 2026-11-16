@@ -28,7 +28,10 @@ namespace NORevokerECR
                 "At game start, write the sensors, radar, countermeasures, capacitor, laser designator, part masses and weapon options " +
                 "of the FS-12, the Ifrit, the Darkreach and the finished EA-12 to the BepInEx log.");
 
-            Registry.Apply(new Harmony(MyPluginInfo.PLUGIN_GUID));
+            var harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
+            VersionTagPatch.Apply(harmony);
+            Registry.Apply(harmony);
+            JammerPods.Apply(harmony);
             SceneManager.sceneLoaded += (scene, mode) => Registry.AddToAllHangars();
         }
 

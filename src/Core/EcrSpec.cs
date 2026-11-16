@@ -16,17 +16,21 @@ namespace NORevokerECR.Core
 
         public const string FullName = "EA-12 Revoker ECR";
         public const string ShortName = "EA-12";
+        // Seb's text (2026-11-17).
         public const string Description =
-            "Electronic combat and reconnaissance variant of the FS-12 Revoker. A larger capacitor, " +
-            "two optical sensors and a laser designator for two targets take room from the internal bays. " +
-            "The wing pylons carry radar jamming pods by default.";
+            "Electronic combat and reconnaissance variant of the FS-12 Revoker. Upgrades include improved radar, " +
+            "advanced optical sensors for ground target detection and power capacity for two jamming pods at the cost " +
+            "of increased weight and reduced internal weapon bay volume.";
 
         public const int Rank = 4;
         public const float PriceMillions = 105f;
         public const int Flares = 86;
-        public const int OpticalSensors = 2;
-        // Base value; each JammingPod1 adds 100 kJ in game (two pods: 800 kJ).
+        // Capacitor as the HUD shows it without pods. It includes the 100 kJ the
+        // FS-12's built-in self-protection jammer adds at spawn (FS-12: 400 + 100).
         public const float CapacitorKJ = 600f;
+        // Added per jamming pod on a pylon. Vanilla pods add nothing (the
+        // JammingPod weapon has no capacitance), this is the EA-12's own rule.
+        public const float PodCapacitorKJ = 100f;
         public const int LaserTargets = 2;
         public const float ExtraEmptyMassKg = 1020f;
     }
