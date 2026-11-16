@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>NORevokerECR</AssemblyName>
+    <RootNamespace>NORevokerECR</RootNamespace>
+    <Version>0.1.0</Version>
+    <BepInExPluginGuid>xyz.geraldhofbauer.norevokerecr</BepInExPluginGuid>
+    <BepInExPluginName>NO-RevokerECR</BepInExPluginName>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <RestoreAdditionalProjectSources>
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.samboy.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" IncludeAssets="compile" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" />
+    <PackageReference Include="UnityEngine.Modules" Version="2022.3.6" IncludeAssets="compile" />
+    <!-- The game ships HarmonyX 2.9.0 (BepInEx/core/0Harmony.dll). -->
+    <PackageReference Include="HarmonyX" Version="2.9.0" IncludeAssets="compile" />
+  </ItemGroup>
+
+  <!-- The game's own assemblies, as reference-only stubs made from YOUR install
+       by scripts/make-refs.sh. Not in the repo: they are the game's code. -->
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp" HintPath="../lib/refs/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="Mirage" HintPath="../lib/refs/Mirage.dll" Private="false" />
+    <Reference Include="UniTask" HintPath="../lib/refs/UniTask.dll" Private="false" />
+  </ItemGroup>
+
+</Project>
