@@ -52,7 +52,10 @@ namespace NORevokerECR.Game
                 for (int i = 0; i < wm.hardpointSets.Length; i++)
                 {
                     HardpointSet h = wm.hardpointSets[i];
-                    Plugin.Log.LogInfo($"[dump]   set {i} \"{h.name}\" ({h.hardpoints?.Count} hardpoints): " +
+                    string excludes = h.precludingHardpointSets != null && h.precludingHardpointSets.Count > 0
+                        ? $", excludes sets [{string.Join(", ", h.precludingHardpointSets)}]"
+                        : "";
+                    Plugin.Log.LogInfo($"[dump]   set {i} \"{h.name}\" ({h.hardpoints?.Count} hardpoints{excludes}): " +
                         string.Join(", ", h.weaponOptions.Select(m => m == null ? "-" : m.jsonKey)));
                 }
             }
