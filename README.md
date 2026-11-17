@@ -19,15 +19,6 @@ The Revoker ECR's defining features are access to jammer pods and improved senso
 | **Stealth** | **No (0.08 RCS)** | No (0.08 RCS) | Yes (0.0015 RCS) | No (0.056 RCS) | Yes (0.01 RCS) |
 | **Price** | **$105.0m**<br>**Rank 4** | $65.0m<br>Rank 3 | $126.0m<br>Rank 4 | $145.0m<br>Rank 4 | $225.0m<br>Rank 5 |
 
-The values come from the game files of Nuclear Option 0.34.6, read out with the mod's debug dump. The wiki is out of date in places: it lists the Darkreach radar at 40 km, the game uses 50 km.
-
-- **Radar:** The distance is the radar's reference range. Without ground clutter or jamming, a target shows up out to 2 × range × RCS^0.25. That is about the listed range for a clean FS-12 (RCS 0.08), about 40 % of it for a clean Ifrit (0.0015) and twice the range for targets with an RCS of 1 or more. Ground clutter shortens it, and a higher clutter factor makes that loss larger. The Medusa column shows its dorsal radome mounted. The radome replaces the built-in radar (50km/27NM, Clutter Factor 0.15) and sees all around the aircraft instead of within 60° of the nose.
-- **Optical:** The distance is how far the sensor searches. A target is only spotted within its own visibility × magnification, so magnification decides how early ground targets show up.
-- **Capacitor:** As shown on the HUD. It includes the 100 kJ of the built-in self-protection jammer that all five aircraft have. Jammer pods do not change it.
-- **EW Pods:** Jamming pods on the wing pylons. Among the vanilla aircraft only the EW-25 Medusa and the Alkyon AB-4 can carry them. The Medusa takes them on its inner and outer pylons.
-- **Laser Designators:** The Medusa's internal 120 kW laser is a weapon, not a designator.
-- **Stealth:** The game has no stealth flag. "Yes" here means a clean RCS of 0.01 or less. The RCS in brackets is the encyclopedia value without external stores; every pylon load adds its own RCS on top. The Medusa's value includes its radome: 0.006 clean plus 0.05.
-
 ## Revoker ECR pylon loadout highlights
 
 - two radar jamming pods
