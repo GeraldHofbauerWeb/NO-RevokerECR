@@ -62,6 +62,7 @@ namespace NORevokerECR.Game
                     Inspector.Dump("optics donor SFB-81", Builder.Aircraft(EcrSpec.OpticsDonorKey));
                     // Only for the README comparison table.
                     Inspector.Dump("comparison EW-25", Builder.Aircraft("EW1"));
+                    Inspector.DumpMount("Radome1");
                 }
 
                 string vanilla = VanillaCheck.Take();

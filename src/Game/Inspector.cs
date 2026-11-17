@@ -68,6 +68,33 @@ namespace NORevokerECR.Game
             }
         }
 
+        // A weapon mount's prefab can bring its own systems, e.g. the Medusa's
+        // radome, whose Radar replaces the aircraft's radar when mounted.
+        internal static void DumpMount(string key)
+        {
+            if (!Encyclopedia.WeaponLookup.TryGetValue(key, out WeaponMount mount) || mount == null || mount.prefab == null)
+            {
+                Plugin.Log.LogInfo($"[dump] mount {key}: not found");
+                return;
+            }
+            GameObject root = mount.prefab;
+            Plugin.Log.LogInfo($"[dump] ==== mount {key} \"{mount.name}\": RCS={mount.RCS} drag={mount.drag} prefab={root.name}");
+            foreach (TargetDetector d in root.GetComponentsInChildren<TargetDetector>(true))
+            {
+                string extra = d is Radar r
+                    ? $" radar: maxRange={r.RadarParameters.maxRange} maxSignal={r.RadarParameters.maxSignal} minSignal={r.RadarParameters.minSignal} " +
+                      $"clutter={r.RadarParameters.clutterFactor} doppler={r.RadarParameters.dopplerFactor}, " +
+                      Reflect.Describe(r, "radarCone", "jamTolerance", "powerDraw")
+                    : "";
+                Plugin.Log.LogInfo($"[dump]   {d.GetType().Name} @ {PathOf(root, d.transform)}: {Reflect.Describe(d, DetectorFields)}{extra}");
+            }
+            foreach (MonoBehaviour b in root.GetComponentsInChildren<MonoBehaviour>(true))
+            {
+                if (!(b is TargetDetector))
+                    Plugin.Log.LogInfo($"[dump]   component {b.GetType().Name} @ {PathOf(root, b.transform)}");
+            }
+        }
+
         internal static string PathOf(GameObject root, Transform t)
         {
             if (t == null) return "?";
