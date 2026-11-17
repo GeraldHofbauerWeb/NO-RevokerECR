@@ -56,11 +56,13 @@ namespace NORevokerECR.Core
                 Default = "JammingPod1",
                 Options = new[]
                 {
+                    // AGM_heavyx2 and AAM1_single removed in 0.3.0 so the list
+                    // fits the loadout menu without scrolling (Seb, 2026-11-17).
                     "JammingPod1",
-                    "AAM1_single", "AAM1_double", "AAM1_triple",
+                    "AAM1_double", "AAM1_triple",
                     "AAM2_single", "AAM2_double", "AAM2_triple",
                     "AAM4_single", "AAM4_double",
-                    "AGM_heavyx2", "AGM_heavy_triple",
+                    "AGM_heavy_triple",
                     "ARM1_single", "ARM1_double",
                     "AShM2_single", "AShM2_double", "AShM3_single",
                     "Rocket2_4Pod", "Rocket2_4Podx3",

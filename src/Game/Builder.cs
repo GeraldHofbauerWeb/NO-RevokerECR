@@ -135,8 +135,9 @@ namespace NORevokerECR.Game
 
         // The optical sensor is a plain TargetDetector (Radar is the only
         // subclass). The FS-12 has one (10 km, magnification 0.7); it gets the
-        // Darkreach's values (12 km, magnification 2). "x2" in Seb's list is
-        // that magnification, not a second sensor.
+        // Darkreach's values (magnification 2, speed limit, timing) and the
+        // EA-12's own search range. "x2" in Seb's list is that
+        // magnification, not a second sensor.
         private static void OpticsLikeDarkreach(GameObject prefab, Aircraft aircraft)
         {
             TargetDetector donor = Optical(Prefab(EcrSpec.OpticsDonorKey)).FirstOrDefault()
@@ -154,6 +155,7 @@ namespace NORevokerECR.Game
                 Reflect.Set(ours, "rotators", Array.CreateInstance(AccessTools.Inner(typeof(TargetDetector), "Rotator"), 0));
             }
             Reflect.Copy(donor, ours, OpticFields);
+            Reflect.Set(ours, "visualRange", EcrSpec.OpticalRangeM);
             Plugin.Log.LogInfo("EA-12 optical sensor like the Darkreach's: " + Reflect.Describe(ours, "visualRange", "magnification"));
         }
 

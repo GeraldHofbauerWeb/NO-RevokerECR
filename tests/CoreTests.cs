@@ -93,9 +93,29 @@ namespace NORevokerECR.Tests
         {
             var all = new HashSet<string>(WeaponTable.AllKeys());
             Assert.Contains("bomb_glide1_double_inernal", all);   // the game's own spelling
-            Assert.Contains("AGM_heavyx2", all);
             Assert.Contains("bomb_penetrator1_mount", all);
             Assert.DoesNotContain("AGM_heavy_double", all);
+        }
+
+        [Fact]
+        public void WingPylonsFitWithoutScrolling()
+        {
+            Station wing = WeaponTable.Stations.Single(s => s.Name == "Wing Pylons");
+            Assert.DoesNotContain("AGM_heavyx2", wing.Options);
+            Assert.DoesNotContain("AAM1_single", wing.Options);
+            Assert.Contains("AGM_heavy_triple", wing.Options);
+            Assert.Equal(23, wing.Options.Length);
+            Assert.Contains("AAM1_single", WeaponTable.Stations.Single(s => s.Name == "Wingtip Pylons").Options);
+        }
+
+        [Fact]
+        public void NothingNuclear()
+        {
+            foreach (string key in WeaponTable.AllKeys())
+            {
+                foreach (string marker in new[] { "nuclear", "Nuke", "20kt", "Genie" })
+                    Assert.DoesNotContain(marker, key, System.StringComparison.OrdinalIgnoreCase);
+            }
         }
     }
 
@@ -119,6 +139,17 @@ namespace NORevokerECR.Tests
         {
             Assert.StartsWith("Electronic combat and reconnaissance variant of the FS-12 Revoker.", EcrSpec.Description);
             Assert.Contains("at the cost of increased weight", EcrSpec.Description);
+            Assert.EndsWith("reduced internal weapon bay volume. Not nuclear-capable.", EcrSpec.Description);
+        }
+
+        [Fact]
+        public void WeightAndOpticsAfterTheFirstTest()
+        {
+            Assert.Equal(2020f, EcrSpec.ExtraEmptyMassKg);
+            Assert.Equal(10700f, 8680f + EcrSpec.ExtraEmptyMassKg);   // FS-12 empty weight 8680 kg (dump)
+            Assert.Equal(16000f, EcrSpec.OpticalRangeM);
+            // 4096 m battlefield grid on the tested map: 16 km = 4 squares, 12 km = 3
+            Assert.Equal(4, (int)System.Math.Ceiling(EcrSpec.OpticalRangeM / 4096f));
         }
 
         [Fact]
