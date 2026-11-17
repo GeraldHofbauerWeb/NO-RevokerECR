@@ -50,6 +50,10 @@ Turn on `DebugDump` for NO-RevokerECR in the game's config menu (F1), or set `De
 
 `scripts/make-refs.sh` creates reference assemblies from your installed game in `lib/refs/`. They are not in the repository because they come from the game's own code. `scripts/build.sh` then builds the plugin and runs the tests in a .NET SDK container.
 
+## Credits
+
+Seb designed the EA-12 and its values, tested it in game, wrote the description and took the screenshots.
+
 ## License
 
 MIT, see [LICENSE](LICENSE).
