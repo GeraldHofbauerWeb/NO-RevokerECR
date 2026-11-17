@@ -16,7 +16,7 @@ The Revoker ECR's defining features are access to jammer pods and improved senso
 | **EW Pods** | **2** | 0 | 0 | 4 | 0 |
 | **Laser Designators** | **2** | 1 | 1 | 0 | 0 |
 | **IR Flares** | **x86** | x64 | x72 | x86 | x86 |
-| **Stealth** | **No (0.08 RCS)** | No (0.08 RCS) | Yes (0.0015 RCS) | No (0.056 RCS) | Yes (0.01 RCS) |
+| **RCS** | **0.08** | 0.08 | 0.0015 | 0.056 | 0.01 |
 | **Price** | **$105.0m**<br>**Rank 4** | $65.0m<br>Rank 3 | $126.0m<br>Rank 4 | $145.0m<br>Rank 4 | $225.0m<br>Rank 5 |
 
 ## Revoker ECR pylon loadout highlights
