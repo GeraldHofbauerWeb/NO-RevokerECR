@@ -30,12 +30,9 @@ The Revoker ECR's defining features are access to jammer pods and improved senso
 
 The Revoker ECR's improved sensors and added EW equipment result in a weight increase and smaller internal weapon bays. This keeps the vanilla FS-12 relevant for air to air missions while the EA-12 excels in a support and SEAD role.
 
-## Details
+Every hangar that offers the FS-12 also offers the EA-12. A mission that restricts the FS-12 restricts the EA-12 too.
 
-- Empty weight is 10,700 kg, 2,020 kg more than the FS-12. The maximum weight stays at 16,000 kg.
-- The EA-12 cannot carry nuclear weapons.
-- Every hangar that offers the FS-12 also offers the EA-12. A mission that restricts the FS-12 restricts the EA-12 too.
-- The FS-12 itself is left unchanged. The mod builds the EA-12 as a copy when the game starts and checks the FS-12 against it every time; the BepInEx log then says "Vanilla check passed".
+The FS-12 itself is left unchanged. The mod builds the EA-12 as a copy when the game starts and checks the FS-12 against it every time; the BepInEx log then says "Vanilla check passed".
 
 ## Installation
 
