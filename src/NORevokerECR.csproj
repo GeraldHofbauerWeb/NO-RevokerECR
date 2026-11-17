@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>NORevokerECR</AssemblyName>
     <RootNamespace>NORevokerECR</RootNamespace>
-    <Version>0.3.0</Version>
+    <Version>0.4.0</Version>
     <BepInExPluginGuid>xyz.geraldhofbauer.norevokerecr</BepInExPluginGuid>
     <BepInExPluginName>NO-RevokerECR</BepInExPluginName>
     <LangVersion>latest</LangVersion>

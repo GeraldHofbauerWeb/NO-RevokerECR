@@ -25,12 +25,12 @@ namespace NORevokerECR.Core
         public const int Rank = 4;
         public const float PriceMillions = 105f;
         public const int Flares = 86;
-        // Capacitor as the HUD shows it without pods. It includes the 100 kJ the
-        // FS-12's built-in self-protection jammer adds at spawn (FS-12: 400 + 100).
-        public const float CapacitorKJ = 600f;
-        // Added per jamming pod on a pylon. Vanilla pods add nothing (the
-        // JammingPod weapon has no capacitance), this is the EA-12's own rule.
-        public const float PodCapacitorKJ = 100f;
+        // Capacitor as the HUD shows it, with or without jamming pods (Seb,
+        // 2026-11-17). It includes the 100 kJ the FS-12's built-in
+        // self-protection jammer adds at spawn (FS-12: 400 + 100 = 500). Pods
+        // add nothing: in the game a pod is a JammingPod weapon that only
+        // draws power.
+        public const float CapacitorKJ = 750f;
         public const int LaserTargets = 2;
         // Empty weight over the FS-12 (8680 + 2020 = 10 700 kg); max weight stays.
         public const float ExtraEmptyMassKg = 2020f;

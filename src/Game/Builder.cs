@@ -21,9 +21,9 @@ namespace NORevokerECR.Game
     // is never touched. Same pattern as the A19J mod (A-19 to A-19J).
     internal static class Builder
     {
-        private static readonly string[] OpticFields =
+        internal static readonly string[] OpticFields =
             { "visualRange", "magnification", "maxSpeed", "checkInterval", "alertCheckInterval", "shared" };
-        private static readonly string[] RadarFields =
+        internal static readonly string[] RadarFields =
             { "radarCone", "jamTolerance", "powerDraw", "visualRange", "magnification", "maxSpeed", "checkInterval", "alertCheckInterval" };
 
         private static GameObject storage;
@@ -159,18 +159,16 @@ namespace NORevokerECR.Game
             Plugin.Log.LogInfo("EA-12 optical sensor like the Darkreach's: " + Reflect.Describe(ours, "visualRange", "magnification"));
         }
 
-        // The HUD value without pods is maxCharge plus what built-in
-        // self-protection jammers add in their Awake (RadarJammer.capacitance,
-        // 100 on the FS-12). Pods are separate prefabs and not counted here;
-        // JammerPods adds their share when they are attached.
+        // The HUD value is maxCharge plus what built-in self-protection jammers
+        // add in their Awake (RadarJammer.capacitance, 100 on the FS-12).
+        // Jamming pods on the pylons do not change it.
         private static void Capacitor(GameObject prefab)
         {
             PowerSupply supply = prefab.GetComponentInChildren<PowerSupply>(true)
                 ?? throw new InvalidOperationException("the FS-12 has no capacitor (PowerSupply)");
             float builtIn = prefab.GetComponentsInChildren<RadarJammer>(true).Sum(j => Reflect.Get<float>(j, "capacitance"));
             Reflect.Set(supply, "maxCharge", EcrSpec.CapacitorKJ - builtIn);
-            Plugin.Log.LogInfo($"EA-12 capacitor: {EcrSpec.CapacitorKJ - builtIn} kJ + {builtIn} kJ built-in jammer = {EcrSpec.CapacitorKJ} kJ, " +
-                $"+{EcrSpec.PodCapacitorKJ} kJ per jamming pod");
+            Plugin.Log.LogInfo($"EA-12 capacitor: {EcrSpec.CapacitorKJ - builtIn} kJ + {builtIn} kJ built-in jammer = {EcrSpec.CapacitorKJ} kJ");
         }
 
         private static void Laser(GameObject prefab)

@@ -62,6 +62,7 @@ namespace NORevokerECR.Game
                     Inspector.Dump("optics donor SFB-81", Builder.Aircraft(EcrSpec.OpticsDonorKey));
                 }
 
+                string vanilla = VanillaCheck.Take();
                 BuildResult built = Builder.Build();
                 foreach (WeaponMount mount in built.Mounts)
                 {
@@ -79,6 +80,7 @@ namespace NORevokerECR.Game
                 Plugin.Log.LogInfo($"{EcrSpec.FullName} ready: index {((INetworkDefinition)Ecr).LookupIndex} of {__instance.IndexLookup.Count}, " +
                     $"prefab hash 0x{EcrSpec.PrefabHash:X8}, {built.Mounts.Count} internal mounts, empty weight {Ecr.mass:0} kg");
                 AddToAllHangars();
+                VanillaCheck.Verify(vanilla);
             }
             catch (Exception e)
             {

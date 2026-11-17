@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
@@ -31,8 +32,11 @@ namespace NORevokerECR
             var harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
             VersionTagPatch.Apply(harmony);
             Registry.Apply(harmony);
-            JammerPods.Apply(harmony);
             SceneManager.sceneLoaded += (scene, mode) => Registry.AddToAllHangars();
+            // Everything this mod hooks into, so a log shows at a glance that
+            // no game code beyond these is touched.
+            Log.LogInfo("Hooks: " + string.Join(", ",
+                harmony.GetPatchedMethods().Select(m => m.DeclaringType?.Name + "." + m.Name).OrderBy(n => n)));
         }
 
         // Logs each distinct failure once. Every hook catches its own exceptions

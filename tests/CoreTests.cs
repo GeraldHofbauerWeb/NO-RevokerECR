@@ -128,10 +128,11 @@ namespace NORevokerECR.Tests
         }
 
         [Fact]
-        public void CapacitorIs600WithoutAnd800WithTwoPods()
+        public void CapacitorIsAFixed750()
         {
-            Assert.Equal(600f, EcrSpec.CapacitorKJ);
-            Assert.Equal(800f, EcrSpec.CapacitorKJ + 2 * EcrSpec.PodCapacitorKJ);
+            Assert.Equal(750f, EcrSpec.CapacitorKJ);
+            // Pods no longer add anything, so there is no per-pod value at all.
+            Assert.Null(typeof(EcrSpec).GetField("PodCapacitorKJ"));
         }
 
         [Fact]
