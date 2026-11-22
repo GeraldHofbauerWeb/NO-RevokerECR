@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/images/ea12-banner.png" width="420" alt="REVOKER ECR title art: the EA-12 over the sea at sunset">
+</p>
+
 # EA-12 Revoker ECR
 
 The EA-12 is a modification of the standard FS-12 specializing in electronic warfare and reconnaissance available as a new rank 4 aircraft.
