@@ -165,6 +165,24 @@ namespace NORevokerECR.Tests
 
 namespace NORevokerECR.Tests
 {
+    public class ServerTests
+    {
+        // A process filter on "NuclearOption.exe" kept the plugin out of the
+        // dedicated server (NuclearOptionServer), so the server reported a
+        // version without the EA-12 tag and players with the mod could not
+        // see it in the server list.
+        [Fact]
+        public void PluginHasNoProcessFilter()
+        {
+            var dir = new System.IO.DirectoryInfo(System.AppContext.BaseDirectory);
+            while (dir != null && !System.IO.File.Exists(System.IO.Path.Combine(dir.FullName, "src", "Plugin.cs")))
+                dir = dir.Parent;
+            Assert.NotNull(dir);
+            string plugin = System.IO.File.ReadAllText(System.IO.Path.Combine(dir.FullName, "src", "Plugin.cs"));
+            Assert.DoesNotContain("[BepInProcess(", plugin);
+        }
+    }
+
     public class VersionTagTests
     {
         [Fact]

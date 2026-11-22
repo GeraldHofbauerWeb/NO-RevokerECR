@@ -40,7 +40,7 @@ Install it through NOMM, the Nuclear Option Mod Manager. Without NOMM, download 
 
 ## Multiplayer
 
-Every player in a session needs the same version of this mod and the same other aircraft and weapon mods. The mod adds its tag to the game version (for example `0.34.6_NO-RevokerECR-v1.0.0`), so the lobby list only shows lobbies with exactly the same mods, and joining any other lobby fails with "Incorrect version". To play in public lobbies without the mod, switch it off in NOMM. Dedicated servers are not supported yet.
+Every player in a session needs the same version of this mod and the same other aircraft and weapon mods. The mod adds its tag to the game version (for example `0.34.6_NO-RevokerECR-v1.0.0`), so the lobby list only shows lobbies with exactly the same mods, and joining any other lobby fails with "Incorrect version". To play in public lobbies without the mod, switch it off in NOMM. A dedicated server needs the mod as well, in the same version as the players, or they will not see it in the server list.
 
 ## If something is wrong
 

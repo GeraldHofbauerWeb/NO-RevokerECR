@@ -12,9 +12,13 @@ namespace NORevokerECR
     // Adds the EA-12 Revoker ECR: a separate aircraft built from the FS-12
     // Revoker at game start, with Seb's sensor, power, weight and weapon
     // changes. The FS-12 itself stays as it is. Every player in a multiplayer
-    // session needs the same version of this mod.
+    // session needs the same version of this mod, a dedicated server too.
+    // There is deliberately no process filter, so the plugin also loads in
+    // NuclearOptionServer (Windows and Linux). The server runs the same
+    // startup (Encyclopedia.AfterLoad before the Steam server starts), so it
+    // builds the same EA-12 and reports the same version tag. Nothing here
+    // needs UI.
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-    [BepInProcess("NuclearOption.exe")]
     public class Plugin : BaseUnityPlugin
     {
         internal static BepInEx.Logging.ManualLogSource Log;
